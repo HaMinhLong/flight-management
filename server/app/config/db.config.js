@@ -23,5 +23,9 @@ db.sequelize = sequelize;
 //Models/tables
 db.flights = require("../model/flight.model.js")(sequelize, Sequelize);
 db.places = require("../model/place.model")(sequelize, Sequelize);
+db.airports = require("../model/airport.model")(sequelize, Sequelize);
+
+db.places.hasOne(db.airports);
+db.airports.hasOne(db.flights);
 
 module.exports = db;

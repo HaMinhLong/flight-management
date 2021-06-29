@@ -13,6 +13,7 @@ exports.create = async (req, res) => {
     placeDeparture: req.body.placeDeparture,
     placeDestination: req.body.placeDestination,
     status: req.body.status,
+    airportId: req.body.airportId,
   }).then((flights) => {
     // Send created customer to client
     res.send(flights);
@@ -44,6 +45,7 @@ exports.update = (req, res) => {
       placeDeparture: req.body.placeDeparture,
       placeDestination: req.body.placeDestination,
       status: req.body.status,
+      airportId: req.body.airportId,
     },
     { where: { id: req.params.id } }
   ).then(() => {

@@ -25,6 +25,7 @@ import {
   Radio,
   Space,
   Popconfirm,
+  Breadcrumb,
 } from "antd";
 const { Content } = Layout;
 const { Option } = Select;
@@ -214,6 +215,10 @@ const Place = () => {
           minHeight: 280,
         }}
       >
+        <Breadcrumb style={{ margin: "16px 0" }}>
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>Place Management</Breadcrumb.Item>
+        </Breadcrumb>
         {SearchForm()}{" "}
         <div
           style={{
