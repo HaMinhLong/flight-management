@@ -1,14 +1,14 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Flight from "../pages/Flight/List";
 import Place from "../pages/Place/List";
+import Airport from "../pages/Airport/List";
 const AppRouter = () => {
   return (
     <>
-      <Router>
-        <Route path="/flight" component={Flight} />
-        <Route path="/place" component={Place} />
-      </Router>
+      <Route path="/flight" component={Flight} />
+      <Route path="/place" component={Place} />
+      <Route path="/airport" component={Airport} />
     </>
   );
 };

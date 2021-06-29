@@ -17,3 +17,12 @@ export const deletePlace = (id) => axios.delete(`${url}/place/${id}`);
 export const updatePlace = (id, data) => axios.put(`${url}/place/${id}`, data);
 export const searchPlace = (dataSearch) =>
   axios.post(`${url}/place/search`, dataSearch);
+
+// AIRPORT MANAGEMENT
+export const fetchAllAirport = () => axios.get(`${url}/airport`);
+export const createAirport = (data) => axios.post(`${url}/airport`, data);
+export const deleteAirport = (id) => axios.delete(`${url}/airport/${id}`);
+export const updateAirport = (id, data) =>
+  axios.put(`${url}/airport/${id}`, data);
+export const searchAirport = (dataSearch) =>
+  axios.post(`${url}/airport/search`, dataSearch);

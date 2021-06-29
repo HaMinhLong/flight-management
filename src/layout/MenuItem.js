@@ -1,21 +1,23 @@
 import React from "react";
-import { Layout, Menu, Typography } from "antd";
+import { Link } from "react-router-dom";
+import { Layout, Menu } from "antd";
 import { DatabaseOutlined } from "@ant-design/icons";
 const { Sider } = Layout;
-const { Link } = Typography;
 
 const MenuItem = ({ collapsed }) => {
   return (
     <>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <a href="/" className="logo"></a>
+        <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
           <Menu.Item key="1" icon={<DatabaseOutlined />}>
-            <Link href="/flight">Flight Management</Link>
+            <Link to="/flight">Flight Management</Link>
           </Menu.Item>
-
           <Menu.Item key="2" icon={<DatabaseOutlined />}>
-            <Link href="/place">Place Management</Link>
+            <Link to="/place">Place Management</Link>
+          </Menu.Item>
+          <Menu.Item key="3" icon={<DatabaseOutlined />}>
+            <Link to="/airport">Airport Management</Link>
           </Menu.Item>
         </Menu>
       </Sider>
