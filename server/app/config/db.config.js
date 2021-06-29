@@ -22,5 +22,6 @@ db.sequelize = sequelize;
 
 //Models/tables
 db.flights = require("../model/flight.model.js")(sequelize, Sequelize);
+db.places = require("../model/place.model")(sequelize, Sequelize);
 
 module.exports = db;

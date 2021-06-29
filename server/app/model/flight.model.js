@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const Assigned = sequelize.define("flight", {
+  const Flight = sequelize.define("flight", {
     id: {
       type: Sequelize.STRING,
       primaryKey: true,
@@ -21,5 +21,5 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
     },
   });
-  return Assigned;
+  return Flight;
 };

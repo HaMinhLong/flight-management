@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import AppTable from "../../componentDashs/Table/AppTable";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchAllFlight,
-  createFlight,
-  updateFlight,
-  deleteFlight,
-  searchFlight,
-} from "../../redux/Flight/FlightActions";
-import { fetchAllPlace } from "../../redux/Place/PlaceActions";
+  fetchAllPlace,
+  createPlace,
+  updatePlace,
+  deletePlace,
+  searchPlace,
+} from "../../redux/Place/PlaceActions";
 import {
   Layout,
   Button,
@@ -31,22 +30,18 @@ const { Content } = Layout;
 const { Option } = Select;
 const FormItem = Form.Item;
 
-const Flight = () => {
+const Place = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [dataUpdate, setDataUpdate] = useState({});
   const [typeAction, setTypeAction] = useState("add");
   useEffect(() => {
-    dispatch(fetchAllFlight());
     dispatch(fetchAllPlace());
   }, [dispatch]);
   useEffect(() => {
     form.setFieldsValue(dataUpdate);
   }, [dataUpdate]);
-  const flights = useSelector((state) => state.flight);
-  const dataPlace = useSelector((state) =>
-    state.place.filter((data) => data.status !== 0)
-  );
+  const places = useSelector((state) => state.place);
   const [visibleDrawer, setVisibleDrawer] = useState(false);
   const [loading, setLoading] = useState(false);
   const [id, setId] = useState();
@@ -69,37 +64,41 @@ const Flight = () => {
     style: { marginBottom: 10 },
     labelAlign: "left",
   };
+
   const handleSearch = (values) => {
-    dispatch(searchFlight(values));
+    dispatch(searchPlace(values));
   };
 
-  const addFlight = (values) => {
+  const addPlace = (values) => {
     values.id =
       typeAction === "add"
         ? Math.floor(Math.random() * 1000000000000000000).toString()
         : dataUpdate.id;
     values.status = 1;
     typeAction === "add"
-      ? dispatch(createFlight(values))
-      : dispatch(updateFlight(values));
+      ? dispatch(createPlace(values))
+      : dispatch(updatePlace(values));
     form.resetFields();
     setVisibleDrawer(false);
     openNotification(
       typeAction === "add"
-        ? "Add flight successfully"
-        : "Update flight successfully",
+        ? "Add place successfully"
+        : "Update place successfully",
       "bottomRight"
     );
   };
   const changeStatus = (record) => {
     record.status = record.status ? 0 : 1;
-    dispatch(updateFlight(record));
+    dispatch(updatePlace(record));
   };
+
   const handleTableChange = () => {};
+
   const confirmDelete = () => {
-    dispatch(deleteFlight(id));
-    openNotification("Delete flight successfully", "bottomRight");
+    dispatch(deletePlace(id));
+    openNotification("Delete place successfully", "bottomRight");
   };
+
   const openNotification = (text, placement) => {
     notification.success({
       message: `${text}`,
@@ -107,76 +106,35 @@ const Flight = () => {
       placement,
     });
   };
+
   const SearchForm = () => {
     return (
       <Form
         onFinish={handleSearch}
         initialValues={{
-          flightCode: "",
-          type: "",
-          placeDeparture: "",
-          placeDestination: "",
+          name: "",
+          status: "",
         }}
       >
         <Row gutter={{ md: 0, lg: 8, xl: 16 }}>
           <Col xl={8} md={12} xs={24}>
-            <FormItem
-              name="flightCode"
-              label={"Flight Code"}
-              {...formItemLayout}
-            >
+            <FormItem name="name" label={"Place Name"} {...formItemLayout}>
               <Input size="small" />
             </FormItem>
           </Col>
-
           <Col xl={8} md={12} xs={24}>
-            <FormItem name="type" label="Type">
-              <Radio.Group>
-                <Radio value="Khứ hồi">Khứ hồi</Radio>
-                <Radio value="1 chiều">1 chiều</Radio>
-              </Radio.Group>
-            </FormItem>
-          </Col>
-
-          <Col xl={8} md={12} xs={24}>
-            <Form.Item
-              label="Place Departure"
-              name="placeDeparture"
-              rules={[
-                { required: true, message: "Please select place departure!" },
-              ]}
-            >
+            <Form.Item label="Status" name="status">
               <Select size="small">
-                {dataPlace &&
-                  dataPlace.length > 0 &&
-                  dataPlace.map((data) => (
-                    <Option key={data.id} value={data.name}>
-                      {data.name}
-                    </Option>
-                  ))}
+                <Option key={1} value={1}>
+                  Active
+                </Option>
+                <Option key={0} value={0}>
+                  Cancel
+                </Option>
               </Select>
             </Form.Item>
           </Col>
 
-          <Col xl={8} md={12} xs={24}>
-            <Form.Item
-              label="Place Destination"
-              name="placeDestination"
-              rules={[
-                { required: true, message: "Please select place destination!" },
-              ]}
-            >
-              <Select size="small">
-                {dataPlace &&
-                  dataPlace.length > 0 &&
-                  dataPlace.map((data) => (
-                    <Option key={data.id} value={data.name}>
-                      {data.name}
-                    </Option>
-                  ))}
-              </Select>
-            </Form.Item>
-          </Col>
           <Col xl={8} md={12} xs={24}>
             <Button type="primary" htmlType="submit">
               Tìm kiếm
@@ -186,29 +144,12 @@ const Flight = () => {
       </Form>
     );
   };
+
   const columns = [
     {
-      title: "Flight Code",
-      dataIndex: "flightCode",
-      key: "flightCode",
-    },
-    {
-      title: "Flight Type",
-      dataIndex: "type",
-      align: "center",
-      key: "type",
-    },
-    {
-      title: "Place Departure",
-      dataIndex: "placeDeparture",
-      align: "center",
-      key: "placeDeparture",
-    },
-    {
-      title: "Place Destination",
-      dataIndex: "placeDestination",
-      align: "center",
-      key: "placeDestination",
+      title: "Place Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Status",
@@ -273,7 +214,7 @@ const Flight = () => {
           minHeight: 280,
         }}
       >
-        {SearchForm()}
+        {SearchForm()}{" "}
         <div
           style={{
             display: "flex",
@@ -295,7 +236,7 @@ const Flight = () => {
           </Button>
         </div>
         <Drawer
-          title="Add New Flight"
+          title="Add New Place"
           placement="right"
           closable={false}
           onClose={() => {
@@ -306,69 +247,20 @@ const Flight = () => {
         >
           <Form
             form={form}
-            onFinish={addFlight}
+            onFinish={addPlace}
             initialValues={{
-              flightCode: "",
-              type: "",
-              placeDeparture: "",
-              placeDestination: "",
+              name: "",
+              status: 1,
             }}
             layout="vertical"
           >
             <FormItem
-              name="flightCode"
-              label={"Flight Code"}
-              rules={[{ required: true, message: "Please input flight code!" }]}
+              name="name"
+              label={"Place Name"}
+              rules={[{ required: true, message: "Please input place name!" }]}
             >
               <Input />
             </FormItem>
-
-            <FormItem
-              name="type"
-              label="Type"
-              rules={[{ required: true, message: "Please choose type!" }]}
-            >
-              <Radio.Group>
-                <Radio value="Khứ hồi">Khứ hồi</Radio>
-                <Radio value="1 chiều">1 chiều</Radio>
-              </Radio.Group>
-            </FormItem>
-
-            <Form.Item
-              label="Place Departure"
-              name="placeDeparture"
-              rules={[
-                { required: true, message: "Please select place departure!" },
-              ]}
-            >
-              <Select>
-                {dataPlace &&
-                  dataPlace.length > 0 &&
-                  dataPlace.map((data) => (
-                    <Option key={data.id} value={data.name}>
-                      {data.name}
-                    </Option>
-                  ))}
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              label="Place Destination"
-              name="placeDestination"
-              rules={[
-                { required: true, message: "Please select place destination!" },
-              ]}
-            >
-              <Select>
-                {dataPlace &&
-                  dataPlace.length > 0 &&
-                  dataPlace.map((data) => (
-                    <Option key={data.id} value={data.name}>
-                      {data.name}
-                    </Option>
-                  ))}
-              </Select>
-            </Form.Item>
 
             <Button type="primary" htmlType="submit">
               Add
@@ -378,7 +270,7 @@ const Flight = () => {
         <AppTable
           loading={loading}
           rowKey="id"
-          dataSource={flights}
+          dataSource={places}
           columns={columns}
           onChange={handleTableChange}
         />
@@ -387,4 +279,4 @@ const Flight = () => {
   );
 };
 
-export default Flight;
+export default Place;
