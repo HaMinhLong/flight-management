@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import AppRouter from "./router/router.config";
+import MenuItem from "./layout/MenuItem";
+import AppHeader from "./layout/AppHeader";
+import { Layout } from "antd";
 
-function App() {
+const App = () => {
+  const [collapsed, setCollapsed] = useState(false);
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Layout id="components-layout-demo-custom-trigger">
+        <MenuItem collapsed={collapsed} />
+        <Layout className="site-layout">
+          <AppHeader collapsed={collapsed} toggleCollapsed={toggleCollapsed} />
+          <AppRouter />
+        </Layout>
+      </Layout>
+    </>
   );
-}
+};
 
 export default App;
