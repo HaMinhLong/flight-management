@@ -181,6 +181,7 @@ const User = () => {
         <p>
           {dataAccount &&
             dataAccount.length > 0 &&
+            dataAccount.find((data) => data.id === record.accountId) &&
             dataAccount.find((data) => data.id === record.accountId).username}
         </p>
       ),

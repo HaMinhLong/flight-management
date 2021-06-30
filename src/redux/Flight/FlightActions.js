@@ -45,3 +45,11 @@ export const searchFlight = (dataSearch) => async (dispatch) => {
     payload: data,
   });
 };
+
+export const totalFlight = () => async (dispatch) => {
+  const { data } = await api.totalFlight();
+  dispatch({
+    type: actions.TOTAL_FLIGHT,
+    payload: data,
+  });
+};

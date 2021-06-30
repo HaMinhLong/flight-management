@@ -114,3 +114,11 @@ exports.login = async (req, res) => {
 
   res.status(200).json(users);
 };
+
+exports.total = async (req, res) => {
+  const total = await Sequelize.query(`SELECT COUNT(id) AS total FROM users`, {
+    type: QueryTypes.SELECT,
+  });
+
+  res.status(200).json(total);
+};

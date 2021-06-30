@@ -229,6 +229,7 @@ const Flight = () => {
       render: (text, record) =>
         dataAirport &&
         dataAirport.length > 0 &&
+        dataAirport.find((data) => data.id === record.airportId) &&
         dataAirport.find((data) => data.id === record.airportId).name,
     },
     {

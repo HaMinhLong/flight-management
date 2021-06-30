@@ -45,3 +45,11 @@ export const searchTicket = (dataSearch) => async (dispatch) => {
     payload: data,
   });
 };
+
+export const totalTicket = () => async (dispatch) => {
+  const { data } = await api.totalTicket();
+  dispatch({
+    type: actions.TOTAL_TICKET,
+    payload: data,
+  });
+};

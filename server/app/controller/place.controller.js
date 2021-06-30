@@ -77,3 +77,11 @@ exports.search = async (req, res) => {
 
   res.status(200).json(places);
 };
+
+exports.total = async (req, res) => {
+  const total = await Sequelize.query(`SELECT COUNT(id) AS total FROM places`, {
+    type: QueryTypes.SELECT,
+  });
+
+  res.status(200).json(total);
+};

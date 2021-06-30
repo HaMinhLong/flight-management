@@ -165,6 +165,7 @@ const Airport = () => {
         <p>
           {dataPlace &&
             dataPlace.length > 0 &&
+            dataPlace.find((data) => data.id === record.placeId) &&
             dataPlace.find((data) => data.id === record.placeId).name}
         </p>
       ),

@@ -92,3 +92,58 @@ exports.search = async (req, res) => {
 
   res.status(200).json(flights);
 };
+
+exports.total = async (req, res) => {
+  const total = await Sequelize.query(
+    `SELECT COUNT(id) AS total FROM flights`,
+    {
+      type: QueryTypes.SELECT,
+    }
+  );
+
+  res.status(200).json(total);
+};
+
+exports.totalByPlaceDeparture = async (req, res) => {
+  const totalByPlaceDeparture = await Sequelize.query(
+    `SELECT placeDeparture as type,COUNT(placeDeparture) as value FROM flights GROUP BY placeDeparture`,
+    {
+      type: QueryTypes.SELECT,
+    }
+  );
+
+  res.status(200).json(totalByPlaceDeparture);
+};
+
+exports.totalByPlaceDestination = async (req, res) => {
+  const totalByPlaceDestination = await Sequelize.query(
+    `SELECT placeDestination as type,COUNT(placeDestination) as value FROM flights GROUP BY placeDestination`,
+    {
+      type: QueryTypes.SELECT,
+    }
+  );
+
+  res.status(200).json(totalByPlaceDestination);
+};
+
+exports.totalByType = async (req, res) => {
+  const totalByType = await Sequelize.query(
+    `SELECT type AS type,COUNT(type) AS value FROM flights GROUP BY type`,
+    {
+      type: QueryTypes.SELECT,
+    }
+  );
+
+  res.status(200).json(totalByType);
+};
+
+exports.totalByAirport = async (req, res) => {
+  const totalByAirport = await Sequelize.query(
+    `SELECT name AS type, COUNT(name) AS value FROM flights as F JOIN airports AS A ON F.airportId = A.id GROUP BY name`,
+    {
+      type: QueryTypes.SELECT,
+    }
+  );
+
+  res.status(200).json(totalByAirport);
+};

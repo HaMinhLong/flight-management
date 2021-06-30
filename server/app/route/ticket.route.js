@@ -13,4 +13,6 @@ module.exports = function (app) {
   app.delete("/api/ticket/:id", ticket.delete);
   // search
   app.post("/api/ticket/search", ticket.search);
+  // total
+  app.post("/api/ticket/total", ticket.total);
 };

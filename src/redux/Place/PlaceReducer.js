@@ -4,6 +4,7 @@ const placeReducer = (state = [], action) => {
   switch (action.type) {
     case actions.FETCH_ALL_PLACE:
     case actions.SEARCH_PLACE:
+    case actions.TOTAL_PLACE:
       return action.payload;
     case actions.CREATE_PLACE:
       return [...state, action.payload];

@@ -182,6 +182,7 @@ const BookTicket = () => {
         <p>
           {dataTicket &&
             dataTicket.length > 0 &&
+            dataTicket.find((data) => data.id === record.ticketId) &&
             dataTicket.find((data) => data.id === record.ticketId).ticketCode}
         </p>
       ),
@@ -194,6 +195,7 @@ const BookTicket = () => {
         <p>
           {dataUser &&
             dataUser.length > 0 &&
+            dataUser.find((data) => data.id === record.userId) &&
             dataUser.find((data) => data.id === record.userId).fullName}
         </p>
       ),

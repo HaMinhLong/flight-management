@@ -174,6 +174,7 @@ const Ticket = () => {
         <p>
           {dataFlight &&
             dataFlight.length > 0 &&
+            dataFlight.find((data) => data.id === record.flightId) &&
             dataFlight.find((data) => data.id === record.flightId).flightCode}
         </p>
       ),

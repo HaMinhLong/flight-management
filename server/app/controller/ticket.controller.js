@@ -81,3 +81,14 @@ exports.search = async (req, res) => {
 
   res.status(200).json(tickets);
 };
+
+exports.total = async (req, res) => {
+  const total = await Sequelize.query(
+    `SELECT COUNT(id) AS total FROM tickets`,
+    {
+      type: QueryTypes.SELECT,
+    }
+  );
+
+  res.status(200).json(total);
+};
