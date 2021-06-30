@@ -13,4 +13,6 @@ module.exports = function (app) {
   app.delete("/api/user/:id", user.delete);
   // search
   app.post("/api/user/search", user.search);
+  //login
+  app.post("/api/user/login", user.login);
 };

@@ -85,3 +85,32 @@ exports.search = async (req, res) => {
 
   res.status(200).json(users);
 };
+
+exports.login = async (req, res) => {
+  const { username, password } = req.body;
+  const checkUsername = await Sequelize.query(
+    `SELECT * FROM accounts AS A JOIN users AS U ON A.id = U.accountId WHERE A.username = :username`,
+    {
+      replacements: {
+        username: username,
+      },
+      type: QueryTypes.SELECT,
+    }
+  );
+  const checkPassword = await Sequelize.query(
+    `SELECT * FROM accounts AS A JOIN users AS U ON A.id = U.accountId WHERE A.password = :password`,
+    {
+      replacements: {
+        password: password,
+      },
+      type: QueryTypes.SELECT,
+    }
+  );
+  const users = !(checkUsername.length > 0)
+    ? "User not found"
+    : !(checkPassword.length > 0)
+    ? "Password is wrong"
+    : checkPassword;
+
+  res.status(200).json(users);
+};

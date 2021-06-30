@@ -45,3 +45,11 @@ export const searchUser = (dataSearch) => async (dispatch) => {
     payload: data,
   });
 };
+
+export const loginUser = (dataLogin) => async (dispatch) => {
+  const { data } = await api.loginUser(dataLogin);
+  dispatch({
+    type: actions.LOGIN_USER,
+    payload: data,
+  });
+};

@@ -4,6 +4,7 @@ const userReducer = (state = [], action) => {
   switch (action.type) {
     case actions.FETCH_ALL_USER:
     case actions.SEARCH_USER:
+    case actions.LOGIN_USER:
       return action.payload;
     case actions.CREATE_USER:
       return [...state, action.payload];
