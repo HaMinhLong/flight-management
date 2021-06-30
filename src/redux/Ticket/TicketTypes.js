@@ -1,0 +1,5 @@
+export const FETCH_ALL_TICKET = "FETCH_ALL_TICKET";
+export const CREATE_TICKET = "CREATE_TICKET";
+export const DELETE_TICKET = "DELETE_TICKET";
+export const UPDATE_TICKET = "UPDATE_TICKET";
+export const SEARCH_TICKET = "SEARCH_TICKET";

@@ -49,6 +49,7 @@ require("./app/route/airport.route")(app);
 require("./app/route/flightTime.route")(app);
 require("./app/route/user.route")(app);
 require("./app/route/account.route")(app);
+require("./app/route/ticket.route")(app);
 
 // Create a Server
 var server = app.listen(8081, function () {
