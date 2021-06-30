@@ -7,7 +7,12 @@ const MenuItem = ({ collapsed }) => {
   return (
     <>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <Link to="/" className="logo" />
+        <Link to="/" className="logo">
+          <img
+            src="https://findlogovector.com/wp-content/uploads/2018/07/professional-flight-management-pfm-logo-vector.png"
+            alt="logo-page"
+          />
+        </Link>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
           <Menu.Item key="1" icon={<i className="fas fa-plane"></i>}>
             <Link to="/flight">Flight Management</Link>
@@ -24,10 +29,13 @@ const MenuItem = ({ collapsed }) => {
           <Menu.Item key="5" icon={<i className="fas fa-ticket-alt"></i>}>
             <Link to="/ticket">Ticket Management</Link>
           </Menu.Item>
-          <Menu.Item key="6" icon={<i className="far fa-user-circle"></i>}>
+          <Menu.Item key="6" icon={<i className="fas fa-money-bill-wave"></i>}>
+            <Link to="/book-ticket">Book Ticket</Link>
+          </Menu.Item>
+          <Menu.Item key="7" icon={<i className="far fa-user-circle"></i>}>
             <Link to="/user">User Management</Link>
           </Menu.Item>
-          <Menu.Item key="7" icon={<i className="far fa-user"></i>}>
+          <Menu.Item key="8" icon={<i className="far fa-user"></i>}>
             <Link to="/account">Account Management</Link>
           </Menu.Item>
         </Menu>

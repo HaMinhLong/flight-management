@@ -3,7 +3,6 @@ import * as actions from "./TicketTypes";
 
 export const fetchAllTicket = () => async (dispatch) => {
   const { data } = await api.fetchAllTicket();
-  console.log(data);
   dispatch({
     type: actions.FETCH_ALL_TICKET,
     payload: data,

@@ -28,11 +28,14 @@ db.flightTimes = require("../model/flightTime.model")(sequelize, Sequelize);
 db.users = require("../model/user.model")(sequelize, Sequelize);
 db.accounts = require("../model/account.model")(sequelize, Sequelize);
 db.tickets = require("../model/ticket.model")(sequelize, Sequelize);
+db.bookTickets = require("../model/bookTicket.model")(sequelize, Sequelize);
 
 db.places.hasOne(db.airports);
 db.airports.hasOne(db.flights);
 db.flightTimes.hasOne(db.flights);
 db.accounts.hasOne(db.users);
 db.flights.hasOne(db.tickets);
+db.tickets.hasOne(db.bookTickets);
+db.users.hasMany(db.bookTickets);
 
 module.exports = db;

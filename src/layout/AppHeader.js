@@ -1,13 +1,22 @@
 import React from "react";
-import { Layout } from "antd";
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
+import { Layout, Button, Popconfirm } from "antd";
+
+import {
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
 const { Header } = Layout;
 
 const AppHeader = ({ collapsed, toggleCollapsed }) => {
+  const logOut = () => {
+    localStorage.setItem("username", "");
+    window.location = "/";
+  };
   return (
     <>
-      <Header className="site-layout-background" style={{ padding: 0 }}>
+      <Header className="site-layout-background">
         {React.createElement(
           collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
           {
@@ -15,6 +24,14 @@ const AppHeader = ({ collapsed, toggleCollapsed }) => {
             onClick: toggleCollapsed,
           }
         )}
+        <Popconfirm
+          title="Are you sure to log out?"
+          onConfirm={logOut}
+          okText="Logout"
+          cancelText="No"
+        >
+          <Button shape="circle" icon={<UserOutlined />}></Button>
+        </Popconfirm>
       </Header>
     </>
   );
