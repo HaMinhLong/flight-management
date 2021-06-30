@@ -10,6 +10,7 @@ import {
 } from "../../redux/Flight/FlightActions";
 import { fetchAllPlace } from "../../redux/Place/PlaceActions";
 import { fetchAllAirport } from "../../redux/Airport/AirportActions";
+import { fetchAllFlightTime } from "../../redux/FlightTime/FlightTimeActions";
 import {
   Layout,
   Button,
@@ -42,6 +43,7 @@ const Flight = () => {
     dispatch(fetchAllFlight());
     dispatch(fetchAllPlace());
     dispatch(fetchAllAirport());
+    dispatch(fetchAllFlightTime());
   }, [dispatch]);
   useEffect(() => {
     form.setFieldsValue(dataUpdate);
@@ -52,6 +54,9 @@ const Flight = () => {
   );
   const dataAirport = useSelector((state) =>
     state.airport.filter((data) => data.status !== 0)
+  );
+  const dataFlightTime = useSelector((state) =>
+    state.flightTime.filter((data) => data.status !== 0)
   );
   const [visibleDrawer, setVisibleDrawer] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -185,7 +190,7 @@ const Flight = () => {
           </Col>
           <Col xl={8} md={12} xs={24}>
             <Button type="primary" htmlType="submit">
-              Tìm kiếm
+              Search
             </Button>
           </Col>
         </Row>
@@ -197,6 +202,7 @@ const Flight = () => {
       title: "Flight Code",
       dataIndex: "flightCode",
       key: "flightCode",
+      sorter: (a, b) => (a > b ? 1 : -1),
     },
     {
       title: "Flight Type",
@@ -221,7 +227,21 @@ const Flight = () => {
       align: "center",
       key: "airportId",
       render: (text, record) =>
+        dataAirport &&
+        dataAirport.length > 0 &&
         dataAirport.find((data) => data.id === record.airportId).name,
+    },
+    {
+      title: "Flight Time",
+      align: "center",
+      key: "flightTimeId",
+      render: (text, record) =>
+        dataFlightTime &&
+        dataFlightTime.length > 0 &&
+        dataFlightTime.find((data) => data.id === record.flightTimeId)
+          ? dataFlightTime.find((data) => data.id === record.flightTimeId)
+              .fromTo
+          : "",
     },
     {
       title: "Status",
@@ -398,6 +418,24 @@ const Flight = () => {
                   dataAirport.map((data) => (
                     <Option key={data.id} value={data.id}>
                       {data.name}
+                    </Option>
+                  ))}
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              label="Flight Time"
+              name="flightTimeId"
+              rules={[
+                { required: true, message: "Please select flight time!" },
+              ]}
+            >
+              <Select>
+                {dataFlightTime &&
+                  dataFlightTime.length > 0 &&
+                  dataFlightTime.map((data) => (
+                    <Option key={data.id} value={data.id}>
+                      {data.fromTo}
                     </Option>
                   ))}
               </Select>

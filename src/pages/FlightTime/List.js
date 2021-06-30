@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import AppTable from "../../componentDashs/Table/AppTable";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchAllPlace,
-  createPlace,
-  updatePlace,
-  deletePlace,
-  searchPlace,
-} from "../../redux/Place/PlaceActions";
+  fetchAllFlightTime,
+  createFlightTime,
+  updateFlightTime,
+  deleteFlightTime,
+  searchFlightTime,
+} from "../../redux/FlightTime/FlightTimeActions";
 import {
   Layout,
   Button,
@@ -30,19 +30,18 @@ import {
 const { Content } = Layout;
 const { Option } = Select;
 const FormItem = Form.Item;
-
-const Place = () => {
+const FlightTime = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [dataUpdate, setDataUpdate] = useState({});
   const [typeAction, setTypeAction] = useState("add");
   useEffect(() => {
-    dispatch(fetchAllPlace());
+    dispatch(fetchAllFlightTime());
   }, [dispatch]);
   useEffect(() => {
     form.setFieldsValue(dataUpdate);
   }, [dataUpdate]);
-  const places = useSelector((state) => state.place);
+  const flightTimes = useSelector((state) => state.flightTime);
   const [visibleDrawer, setVisibleDrawer] = useState(false);
   const [loading, setLoading] = useState(false);
   const [id, setId] = useState();
@@ -67,37 +66,38 @@ const Place = () => {
   };
 
   const handleSearch = (values) => {
-    dispatch(searchPlace(values));
+    dispatch(searchFlightTime(values));
   };
 
-  const addPlace = (values) => {
+  const addFlightTime = (values) => {
     values.id =
       typeAction === "add"
         ? Math.floor(Math.random() * 1000000000000000000).toString()
         : dataUpdate.id;
     values.status = 1;
     typeAction === "add"
-      ? dispatch(createPlace(values))
-      : dispatch(updatePlace(values));
+      ? dispatch(createFlightTime(values))
+      : dispatch(updateFlightTime(values));
     form.resetFields();
     setVisibleDrawer(false);
     openNotification(
       typeAction === "add"
-        ? "Add place successfully"
-        : "Update place successfully",
+        ? "Add flight time successfully"
+        : "Update flight time successfully",
       "bottomRight"
     );
   };
+
   const changeStatus = (record) => {
     record.status = record.status ? 0 : 1;
-    dispatch(updatePlace(record));
+    dispatch(updateFlightTime(record));
   };
 
   const handleTableChange = () => {};
 
   const confirmDelete = () => {
-    dispatch(deletePlace(id));
-    openNotification("Delete place successfully", "bottomRight");
+    dispatch(deleteFlightTime(id));
+    openNotification("Delete flight time successfully", "bottomRight");
   };
 
   const openNotification = (text, placement) => {
@@ -119,7 +119,7 @@ const Place = () => {
       >
         <Row gutter={{ md: 0, lg: 8, xl: 16 }}>
           <Col xl={8} md={12} xs={24}>
-            <FormItem name="name" label={"Place Name"} {...formItemLayout}>
+            <FormItem name="fromTo" label={"Flight Time"} {...formItemLayout}>
               <Input size="small" />
             </FormItem>
           </Col>
@@ -148,10 +148,9 @@ const Place = () => {
 
   const columns = [
     {
-      title: "Place Name",
-      dataIndex: "name",
-      key: "name",
-      sorter: (a, b) => (a > b ? 1 : -1),
+      title: "Flight Time Name",
+      dataIndex: "fromTo",
+      key: "fromTo",
     },
     {
       title: "Status",
@@ -218,7 +217,7 @@ const Place = () => {
       >
         <Breadcrumb style={{ margin: "16px 0" }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>Place Management</Breadcrumb.Item>
+          <Breadcrumb.Item>Flight Time Management</Breadcrumb.Item>
         </Breadcrumb>
         {SearchForm()}
         <div
@@ -253,17 +252,17 @@ const Place = () => {
         >
           <Form
             form={form}
-            onFinish={addPlace}
+            onFinish={addFlightTime}
             initialValues={{
-              name: "",
+              fromTo: "",
               status: 1,
             }}
             layout="vertical"
           >
             <FormItem
-              name="name"
-              label={"Place Name"}
-              rules={[{ required: true, message: "Please input place name!" }]}
+              name="fromTo"
+              label={"Flight Time"}
+              rules={[{ required: true, message: "Please input flight time!" }]}
             >
               <Input />
             </FormItem>
@@ -276,7 +275,7 @@ const Place = () => {
         <AppTable
           loading={loading}
           rowKey="id"
-          dataSource={places}
+          dataSource={flightTimes}
           columns={columns}
           onChange={handleTableChange}
         />
@@ -285,4 +284,4 @@ const Place = () => {
   );
 };
 
-export default Place;
+export default FlightTime;

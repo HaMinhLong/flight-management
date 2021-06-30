@@ -26,3 +26,12 @@ export const updateAirport = (id, data) =>
   axios.put(`${url}/airport/${id}`, data);
 export const searchAirport = (dataSearch) =>
   axios.post(`${url}/airport/search`, dataSearch);
+
+// FLIGHT TIME MANAGEMENT
+export const fetchAllFlightTime = () => axios.get(`${url}/flightTime`);
+export const createFlightTime = (data) => axios.post(`${url}/flightTime`, data);
+export const deleteFlightTime = (id) => axios.delete(`${url}/flightTime/${id}`);
+export const updateFlightTime = (id, data) =>
+  axios.put(`${url}/flightTime/${id}`, data);
+export const searchFlightTime = (dataSearch) =>
+  axios.post(`${url}/flightTime/search`, dataSearch);

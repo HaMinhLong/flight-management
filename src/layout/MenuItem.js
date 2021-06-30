@@ -8,7 +8,7 @@ const MenuItem = ({ collapsed }) => {
   return (
     <>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo" />
+        <Link to="/" className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
           <Menu.Item key="1" icon={<DatabaseOutlined />}>
             <Link to="/flight">Flight Management</Link>
@@ -18,6 +18,9 @@ const MenuItem = ({ collapsed }) => {
           </Menu.Item>
           <Menu.Item key="3" icon={<DatabaseOutlined />}>
             <Link to="/airport">Airport Management</Link>
+          </Menu.Item>
+          <Menu.Item key="4" icon={<DatabaseOutlined />}>
+            <Link to="/time">Flight Time Management</Link>
           </Menu.Item>
         </Menu>
       </Sider>
