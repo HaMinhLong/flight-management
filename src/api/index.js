@@ -62,3 +62,12 @@ export const updateTicket = (id, data) =>
   axios.put(`${url}/ticket/${id}`, data);
 export const searchTicket = (dataSearch) =>
   axios.post(`${url}/ticket/search`, dataSearch);
+
+// BOOK TICKET MANAGEMENT
+export const fetchAllBookTicket = () => axios.get(`${url}/bookTicket`);
+export const createBookTicket = (data) => axios.post(`${url}/bookTicket`, data);
+export const deleteBookTicket = (id) => axios.delete(`${url}/bookTicket/${id}`);
+export const updateBookTicket = (id, data) =>
+  axios.put(`${url}/bookTicket/${id}`, data);
+export const searchBookTicket = (dataSearch) =>
+  axios.post(`${url}/bookTicket/search`, dataSearch);
