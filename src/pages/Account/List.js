@@ -3,13 +3,12 @@ import AppTable from "../../componentDashs/Table/AppTable";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import {
-  fetchAllAirport,
-  createAirport,
-  deleteAirport,
-  updateAirport,
-  searchAirport,
-} from "../../redux/Airport/AirportActions";
-import { fetchAllPlace } from "../../redux/Place/PlaceActions";
+  fetchAllAccount,
+  createAccount,
+  deleteAccount,
+  updateAccount,
+  searchAccount,
+} from "../../redux/Account/AccountActions";
 import {
   Layout,
   Button,
@@ -32,20 +31,19 @@ import {
 const { Content } = Layout;
 const { Option } = Select;
 const FormItem = Form.Item;
-const Airport = () => {
+
+const Account = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [dataUpdate, setDataUpdate] = useState({});
   const [typeAction, setTypeAction] = useState("add");
   useEffect(() => {
-    dispatch(fetchAllAirport());
-    dispatch(fetchAllPlace());
+    dispatch(fetchAllAccount());
   }, [dispatch]);
   useEffect(() => {
     form.setFieldsValue(dataUpdate);
   }, [dataUpdate]);
-  const airports = useSelector((state) => state.airport);
-  const dataPlace = useSelector((state) => state.place);
+  const accounts = useSelector((state) => state.account);
   const [visibleDrawer, setVisibleDrawer] = useState(false);
   const [loading, setLoading] = useState(false);
   const [id, setId] = useState();
@@ -70,38 +68,38 @@ const Airport = () => {
   };
 
   const handleSearch = (values) => {
-    dispatch(searchAirport(values));
+    dispatch(searchAccount(values));
   };
 
-  const addPlace = (values) => {
+  const addAccount = (values) => {
     values.id =
       typeAction === "add"
         ? Math.floor(Math.random() * 1000000000000000000).toString()
         : dataUpdate.id;
     values.status = 1;
     typeAction === "add"
-      ? dispatch(createAirport(values))
-      : dispatch(updateAirport(values));
+      ? dispatch(createAccount(values))
+      : dispatch(updateAccount(values));
     form.resetFields();
     setVisibleDrawer(false);
     openNotification(
       typeAction === "add"
-        ? "Add airport successfully"
-        : "Update airport successfully",
+        ? "Add account successfully"
+        : "Update account successfully",
       "bottomRight"
     );
   };
 
   const changeStatus = (record) => {
     record.status = record.status ? 0 : 1;
-    dispatch(updateAirport(record));
+    dispatch(updateAccount(record));
   };
 
   const handleTableChange = () => {};
 
   const confirmDelete = () => {
-    dispatch(deleteAirport(id));
-    openNotification("Delete airport successfully", "bottomRight");
+    dispatch(deleteAccount(id));
+    openNotification("Delete account successfully", "bottomRight");
   };
 
   const openNotification = (text, placement) => {
@@ -117,13 +115,13 @@ const Airport = () => {
       <Form
         onFinish={handleSearch}
         initialValues={{
-          name: "",
+          username: "",
           status: "",
         }}
       >
         <Row gutter={{ md: 0, lg: 8, xl: 16 }}>
           <Col xl={8} md={12} xs={24}>
-            <FormItem name="name" label={"Airport Name"} {...formItemLayout}>
+            <FormItem name="username" label={"Username"} {...formItemLayout}>
               <Input size="small" />
             </FormItem>
           </Col>
@@ -152,22 +150,10 @@ const Airport = () => {
 
   const columns = [
     {
-      title: "Airport Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Username",
+      dataIndex: "username",
+      key: "username",
       sorter: (a, b) => (a > b ? 1 : -1),
-    },
-    {
-      title: "Place Name",
-      key: "placeId",
-      sorter: (a, b) => (a > b ? 1 : -1),
-      render: (text, record) => (
-        <p>
-          {dataPlace &&
-            dataPlace.length > 0 &&
-            dataPlace.find((data) => data.id === record.placeId).name}
-        </p>
-      ),
     },
     {
       title: "Created At",
@@ -228,100 +214,122 @@ const Airport = () => {
   ];
 
   return (
-    <>
-      <Content
-        className="site-layout-background"
+    <Content
+      className="site-layout-background"
+      style={{
+        margin: "24px 16px",
+        padding: 24,
+        minHeight: 280,
+      }}
+    >
+      <Breadcrumb style={{ margin: "16px 0" }}>
+        <Breadcrumb.Item>Home</Breadcrumb.Item>
+        <Breadcrumb.Item>Account Management</Breadcrumb.Item>
+      </Breadcrumb>
+      {SearchForm()}
+      <div
         style={{
-          margin: "24px 16px",
-          padding: 24,
-          minHeight: 280,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: 20,
         }}
       >
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>Airport Management</Breadcrumb.Item>
-        </Breadcrumb>
-        {SearchForm()}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: 20,
+        <div></div>
+        <Button
+          type="primary"
+          onClick={() => {
+            form.resetFields();
+            setTypeAction("add");
+            setVisibleDrawer(true);
           }}
         >
-          <div></div>
-          <Button
-            type="primary"
-            onClick={() => {
-              form.resetFields();
-              setTypeAction("add");
-              setVisibleDrawer(true);
-            }}
+          Add
+        </Button>
+      </div>
+      <Drawer
+        title={typeAction === "add" ? "Add New Account" : "Update Account"}
+        placement="right"
+        closable={false}
+        onClose={() => {
+          setVisibleDrawer(false);
+        }}
+        visible={visibleDrawer}
+        width={450}
+      >
+        <Form
+          form={form}
+          onFinish={addAccount}
+          initialValues={{
+            username: "",
+            password: "",
+            status: 1,
+          }}
+          layout="vertical"
+        >
+          <FormItem
+            name="username"
+            label={"Username"}
+            rules={[{ required: true, message: "Please input username!" }]}
           >
-            Add
+            <Input />
+          </FormItem>
+
+          <FormItem
+            name="password"
+            label="Password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
+            hasFeedback
+          >
+            <Input.Password />
+          </FormItem>
+
+          <FormItem
+            name="confirm"
+            label="Confirm Password"
+            dependencies={["password"]}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Please confirm your password!",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error(
+                      "The two passwords that you entered do not match!"
+                    )
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input.Password />
+          </FormItem>
+
+          <Button type="primary" htmlType="submit">
+            {typeAction === "add" ? "Add" : "Update"}
           </Button>
-        </div>
-        <Drawer
-          title={typeAction === "add" ? "Add New Airport" : "Update Airport"}
-          placement="right"
-          closable={false}
-          onClose={() => {
-            setVisibleDrawer(false);
-          }}
-          visible={visibleDrawer}
-          width={450}
-        >
-          <Form
-            form={form}
-            onFinish={addPlace}
-            initialValues={{
-              name: "",
-              status: 1,
-            }}
-            layout="vertical"
-          >
-            <FormItem
-              name="name"
-              label={"Airport Name"}
-              rules={[
-                { required: true, message: "Please input airport name!" },
-              ]}
-            >
-              <Input />
-            </FormItem>
-
-            <Form.Item
-              label="Place Destination"
-              name="placeId"
-              rules={[{ required: true, message: "Please select place!" }]}
-            >
-              <Select>
-                {dataPlace &&
-                  dataPlace.length > 0 &&
-                  dataPlace.map((data) => (
-                    <Option key={data.id} value={data.id}>
-                      {data.name}
-                    </Option>
-                  ))}
-              </Select>
-            </Form.Item>
-
-            <Button type="primary" htmlType="submit">
-              {typeAction === "add" ? "Add" : "Update"}
-            </Button>
-          </Form>
-        </Drawer>
-        <AppTable
-          loading={loading}
-          rowKey="id"
-          dataSource={airports}
-          columns={columns}
-          onChange={handleTableChange}
-        />
-      </Content>
-    </>
+        </Form>
+      </Drawer>
+      <AppTable
+        loading={loading}
+        rowKey="id"
+        dataSource={accounts}
+        columns={columns}
+        onChange={handleTableChange}
+      />
+    </Content>
   );
 };
 
-export default Airport;
+export default Account;

@@ -332,7 +332,7 @@ const Flight = () => {
           </Button>
         </div>
         <Drawer
-          title="Add New Flight"
+          title={typeAction === "add" ? "Add New Flight" : "Update Flight"}
           placement="right"
           closable={false}
           onClose={() => {
@@ -442,7 +442,7 @@ const Flight = () => {
             </Form.Item>
 
             <Button type="primary" htmlType="submit">
-              Add
+              {typeAction === "add" ? "Add" : "Update"}
             </Button>
           </Form>
         </Drawer>

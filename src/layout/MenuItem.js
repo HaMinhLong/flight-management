@@ -22,6 +22,12 @@ const MenuItem = ({ collapsed }) => {
           <Menu.Item key="4" icon={<DatabaseOutlined />}>
             <Link to="/time">Flight Time Management</Link>
           </Menu.Item>
+          <Menu.Item key="5" icon={<DatabaseOutlined />}>
+            <Link to="/user">User Management</Link>
+          </Menu.Item>
+          <Menu.Item key="6" icon={<DatabaseOutlined />}>
+            <Link to="/account">Account Management</Link>
+          </Menu.Item>
         </Menu>
       </Sider>
     </>

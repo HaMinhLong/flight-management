@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import AppTable from "../../componentDashs/Table/AppTable";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
 import {
-  fetchAllAirport,
-  createAirport,
-  deleteAirport,
-  updateAirport,
-  searchAirport,
-} from "../../redux/Airport/AirportActions";
-import { fetchAllPlace } from "../../redux/Place/PlaceActions";
+  fetchAllUser,
+  createUser,
+  deleteUser,
+  updateUser,
+  searchUser,
+} from "../../redux/User/UserActions";
+import { fetchAllAccount } from "../../redux/Account/AccountActions";
 import {
   Layout,
   Button,
@@ -32,20 +31,23 @@ import {
 const { Content } = Layout;
 const { Option } = Select;
 const FormItem = Form.Item;
-const Airport = () => {
+
+const User = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [dataUpdate, setDataUpdate] = useState({});
   const [typeAction, setTypeAction] = useState("add");
   useEffect(() => {
-    dispatch(fetchAllAirport());
-    dispatch(fetchAllPlace());
+    dispatch(fetchAllUser());
+    dispatch(fetchAllAccount());
   }, [dispatch]);
   useEffect(() => {
     form.setFieldsValue(dataUpdate);
   }, [dataUpdate]);
-  const airports = useSelector((state) => state.airport);
-  const dataPlace = useSelector((state) => state.place);
+  const users = useSelector((state) => state.user);
+  const dataAccount = useSelector((state) =>
+    state.account.filter((data) => data.status !== 0)
+  );
   const [visibleDrawer, setVisibleDrawer] = useState(false);
   const [loading, setLoading] = useState(false);
   const [id, setId] = useState();
@@ -70,38 +72,38 @@ const Airport = () => {
   };
 
   const handleSearch = (values) => {
-    dispatch(searchAirport(values));
+    dispatch(searchUser(values));
   };
 
-  const addPlace = (values) => {
+  const addUser = (values) => {
     values.id =
       typeAction === "add"
         ? Math.floor(Math.random() * 1000000000000000000).toString()
         : dataUpdate.id;
     values.status = 1;
     typeAction === "add"
-      ? dispatch(createAirport(values))
-      : dispatch(updateAirport(values));
+      ? dispatch(createUser(values))
+      : dispatch(updateUser(values));
     form.resetFields();
     setVisibleDrawer(false);
     openNotification(
       typeAction === "add"
-        ? "Add airport successfully"
-        : "Update airport successfully",
+        ? "Add user successfully"
+        : "Update user successfully",
       "bottomRight"
     );
   };
 
   const changeStatus = (record) => {
     record.status = record.status ? 0 : 1;
-    dispatch(updateAirport(record));
+    dispatch(updateUser(record));
   };
 
   const handleTableChange = () => {};
 
   const confirmDelete = () => {
-    dispatch(deleteAirport(id));
-    openNotification("Delete airport successfully", "bottomRight");
+    dispatch(deleteUser(id));
+    openNotification("Delete user successfully", "bottomRight");
   };
 
   const openNotification = (text, placement) => {
@@ -117,13 +119,13 @@ const Airport = () => {
       <Form
         onFinish={handleSearch}
         initialValues={{
-          name: "",
+          fullName: "",
           status: "",
         }}
       >
         <Row gutter={{ md: 0, lg: 8, xl: 16 }}>
           <Col xl={8} md={12} xs={24}>
-            <FormItem name="name" label={"Airport Name"} {...formItemLayout}>
+            <FormItem name="fullName" label={"Full Name"} {...formItemLayout}>
               <Input size="small" />
             </FormItem>
           </Col>
@@ -152,27 +154,36 @@ const Airport = () => {
 
   const columns = [
     {
-      title: "Airport Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Full Name",
+      dataIndex: "fullName",
+      key: "fullName",
       sorter: (a, b) => (a > b ? 1 : -1),
     },
     {
-      title: "Place Name",
-      key: "placeId",
-      sorter: (a, b) => (a > b ? 1 : -1),
+      title: "Gender",
+      dataIndex: "gender",
+      key: "gender",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Phone Number",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
+    },
+    {
+      title: "Username",
+      key: "accountId",
       render: (text, record) => (
         <p>
-          {dataPlace &&
-            dataPlace.length > 0 &&
-            dataPlace.find((data) => data.id === record.placeId).name}
+          {dataAccount &&
+            dataAccount.length > 0 &&
+            dataAccount.find((data) => data.id === record.accountId).username}
         </p>
       ),
-    },
-    {
-      title: "Created At",
-      key: "createdAt",
-      render: (text, record) => <p>{moment(record.createdAt).format("LL")}</p>,
     },
     {
       title: "Status",
@@ -226,7 +237,6 @@ const Airport = () => {
       ),
     },
   ];
-
   return (
     <>
       <Content
@@ -239,7 +249,7 @@ const Airport = () => {
       >
         <Breadcrumb style={{ margin: "16px 0" }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>Airport Management</Breadcrumb.Item>
+          <Breadcrumb.Item>User Management</Breadcrumb.Item>
         </Breadcrumb>
         {SearchForm()}
         <div
@@ -263,7 +273,7 @@ const Airport = () => {
           </Button>
         </div>
         <Drawer
-          title={typeAction === "add" ? "Add New Airport" : "Update Airport"}
+          title={typeAction === "add" ? "Add New User" : "Update User"}
           placement="right"
           closable={false}
           onClose={() => {
@@ -274,34 +284,73 @@ const Airport = () => {
         >
           <Form
             form={form}
-            onFinish={addPlace}
+            onFinish={addUser}
             initialValues={{
-              name: "",
+              fullName: "",
+              gender: "",
+              email: "",
+              phoneNumber: "",
+              accountId: "",
               status: 1,
             }}
             layout="vertical"
           >
             <FormItem
-              name="name"
-              label={"Airport Name"}
+              name="fullName"
+              label={"Full Name"}
               rules={[
-                { required: true, message: "Please input airport name!" },
+                { required: true, message: "Please input your full name!" },
+              ]}
+            >
+              <Input />
+            </FormItem>
+
+            <FormItem
+              name="gender"
+              label={"Gender"}
+              rules={[
+                { required: true, message: "Please select your gender!" },
+              ]}
+            >
+              <Select>
+                <Option key={"Male"} value={"Male"}>
+                  Male
+                </Option>
+                <Option key={"Female"} value={"Female"}>
+                  Female
+                </Option>
+              </Select>
+            </FormItem>
+
+            <FormItem
+              name="email"
+              label={"Email"}
+              rules={[{ required: true, message: "Please input your email!" }]}
+            >
+              <Input />
+            </FormItem>
+
+            <FormItem
+              name="phoneNumber"
+              label={"Phone Number"}
+              rules={[
+                { required: true, message: "Please input your phone number!" },
               ]}
             >
               <Input />
             </FormItem>
 
             <Form.Item
-              label="Place Destination"
-              name="placeId"
-              rules={[{ required: true, message: "Please select place!" }]}
+              label="Account"
+              name="accountId"
+              rules={[{ required: true, message: "Please select account!" }]}
             >
               <Select>
-                {dataPlace &&
-                  dataPlace.length > 0 &&
-                  dataPlace.map((data) => (
-                    <Option key={data.id} value={data.id}>
-                      {data.name}
+                {dataAccount &&
+                  dataAccount.length > 0 &&
+                  dataAccount.map((data) => (
+                    <Option key={data.id} value={data.accountId}>
+                      {data.username}
                     </Option>
                   ))}
               </Select>
@@ -315,7 +364,7 @@ const Airport = () => {
         <AppTable
           loading={loading}
           rowKey="id"
-          dataSource={airports}
+          dataSource={users}
           columns={columns}
           onChange={handleTableChange}
         />
@@ -324,4 +373,4 @@ const Airport = () => {
   );
 };
 
-export default Airport;
+export default User;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AppTable from "../../componentDashs/Table/AppTable";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 import {
   fetchAllFlightTime,
   createFlightTime,
@@ -153,6 +154,11 @@ const FlightTime = () => {
       key: "fromTo",
     },
     {
+      title: "Created At",
+      key: "createdAt",
+      render: (text, record) => <p>{moment(record.createdAt).format("LL")}</p>,
+    },
+    {
       title: "Status",
       align: "center",
       key: "status",
@@ -241,7 +247,9 @@ const FlightTime = () => {
           </Button>
         </div>
         <Drawer
-          title="Add New Place"
+          title={
+            typeAction === "add" ? "Add New Flight Time" : "Update Flight Time"
+          }
           placement="right"
           closable={false}
           onClose={() => {
@@ -268,7 +276,7 @@ const FlightTime = () => {
             </FormItem>
 
             <Button type="primary" htmlType="submit">
-              Add
+              {typeAction === "add" ? "Add" : "Update"}
             </Button>
           </Form>
         </Drawer>

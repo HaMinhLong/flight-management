@@ -35,3 +35,20 @@ export const updateFlightTime = (id, data) =>
   axios.put(`${url}/flightTime/${id}`, data);
 export const searchFlightTime = (dataSearch) =>
   axios.post(`${url}/flightTime/search`, dataSearch);
+
+// USER MANAGEMENT
+export const fetchAllUser = () => axios.get(`${url}/user`);
+export const createUser = (data) => axios.post(`${url}/user`, data);
+export const deleteUser = (id) => axios.delete(`${url}/user/${id}`);
+export const updateUser = (id, data) => axios.put(`${url}/user/${id}`, data);
+export const searchUser = (dataSearch) =>
+  axios.post(`${url}/user/search`, dataSearch);
+
+// ACCOUNT MANAGEMENT
+export const fetchAllAccount = () => axios.get(`${url}/account`);
+export const createAccount = (data) => axios.post(`${url}/account`, data);
+export const deleteAccount = (id) => axios.delete(`${url}/account/${id}`);
+export const updateAccount = (id, data) =>
+  axios.put(`${url}/account/${id}`, data);
+export const searchAccount = (dataSearch) =>
+  axios.post(`${url}/account/search`, dataSearch);
