@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AppTable from "../../componentDashs/Table/AppTable";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 import {
   fetchAllPlace,
   createPlace,
@@ -154,6 +155,11 @@ const Place = () => {
       sorter: (a, b) => (a > b ? 1 : -1),
     },
     {
+      title: "Created At",
+      key: "createdAt",
+      render: (text, record) => <p>{moment(record.createdAt).format("LL")}</p>,
+    },
+    {
       title: "Status",
       align: "center",
       key: "status",
@@ -242,7 +248,7 @@ const Place = () => {
           </Button>
         </div>
         <Drawer
-          title="Add New Place"
+          title={typeAction === "add" ? "Add New Place" : "Update Place"}
           placement="right"
           closable={false}
           onClose={() => {
@@ -269,7 +275,7 @@ const Place = () => {
             </FormItem>
 
             <Button type="primary" htmlType="submit">
-              Add
+              {typeAction === "add" ? "Add" : "Update"}
             </Button>
           </Form>
         </Drawer>
