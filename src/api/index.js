@@ -43,6 +43,7 @@ export const deleteUser = (id) => axios.delete(`${url}/user/${id}`);
 export const updateUser = (id, data) => axios.put(`${url}/user/${id}`, data);
 export const searchUser = (dataSearch) =>
   axios.post(`${url}/user/search`, dataSearch);
+export const loginUser = (data) => axios.post(`${url}/user/login`, data);
 
 // ACCOUNT MANAGEMENT
 export const fetchAllAccount = () => axios.get(`${url}/account`);
