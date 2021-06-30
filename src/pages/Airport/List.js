@@ -141,7 +141,7 @@ const Airport = () => {
 
           <Col xl={8} md={12} xs={24}>
             <Button type="primary" htmlType="submit">
-              Tìm kiếm
+              Search
             </Button>
           </Col>
         </Row>
@@ -154,12 +154,18 @@ const Airport = () => {
       title: "Airport Name",
       dataIndex: "name",
       key: "name",
+      sorter: (a, b) => (a > b ? 1 : -1),
     },
     {
       title: "Place Name",
       key: "placeId",
+      sorter: (a, b) => (a > b ? 1 : -1),
       render: (text, record) => (
-        <p>{dataPlace.find((data) => data.id === record.placeId).name} </p>
+        <p>
+          {dataPlace &&
+            dataPlace.length > 0 &&
+            dataPlace.find((data) => data.id === record.placeId).name}
+        </p>
       ),
     },
     {
@@ -229,7 +235,7 @@ const Airport = () => {
           <Breadcrumb.Item>Home</Breadcrumb.Item>
           <Breadcrumb.Item>Airport Management</Breadcrumb.Item>
         </Breadcrumb>
-        {SearchForm()}{" "}
+        {SearchForm()}
         <div
           style={{
             display: "flex",

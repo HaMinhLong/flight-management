@@ -46,6 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 require("./app/route/flight.route")(app);
 require("./app/route/place.route")(app);
 require("./app/route/airport.route")(app);
+require("./app/route/flightTime.route")(app);
 
 // Create a Server
 var server = app.listen(8081, function () {
