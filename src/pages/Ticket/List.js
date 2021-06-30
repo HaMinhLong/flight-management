@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import AppTable from "../../componentDashs/Table/AppTable";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchAllUser,
-  createUser,
-  deleteUser,
-  updateUser,
-  searchUser,
-} from "../../redux/User/UserActions";
-import { fetchAllAccount } from "../../redux/Account/AccountActions";
+  fetchAllTicket,
+  createTicket,
+  deleteTicket,
+  updateTicket,
+  searchTicket,
+} from "../../redux/Ticket/TicketActions";
+import { fetchAllFlight } from "../../redux/Flight/FlightActions";
 import {
   Layout,
   Button,
@@ -31,22 +31,21 @@ import {
 const { Content } = Layout;
 const { Option } = Select;
 const FormItem = Form.Item;
-
-const User = () => {
+const Ticket = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [dataUpdate, setDataUpdate] = useState({});
   const [typeAction, setTypeAction] = useState("add");
   useEffect(() => {
-    dispatch(fetchAllUser());
-    dispatch(fetchAllAccount());
+    dispatch(fetchAllTicket());
+    dispatch(fetchAllFlight());
   }, [dispatch]);
   useEffect(() => {
     form.setFieldsValue(dataUpdate);
   }, [dataUpdate]);
-  const users = useSelector((state) => state.user);
-  const dataAccount = useSelector((state) =>
-    state.account.filter((data) => data.status !== 0)
+  const tickets = useSelector((state) => state.ticket);
+  const dataFlight = useSelector((state) =>
+    state.flight.filter((data) => data.status !== 0)
   );
   const [visibleDrawer, setVisibleDrawer] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -72,38 +71,38 @@ const User = () => {
   };
 
   const handleSearch = (values) => {
-    dispatch(searchUser(values));
+    dispatch(searchTicket(values));
   };
 
-  const addUser = (values) => {
+  const addTicket = (values) => {
     values.id =
       typeAction === "add"
         ? Math.floor(Math.random() * 1000000000000000000).toString()
         : dataUpdate.id;
     values.status = 1;
     typeAction === "add"
-      ? dispatch(createUser(values))
-      : dispatch(updateUser(values));
+      ? dispatch(createTicket(values))
+      : dispatch(updateTicket(values));
     form.resetFields();
     setVisibleDrawer(false);
     openNotification(
       typeAction === "add"
-        ? "Add user successfully"
-        : "Update user successfully",
+        ? "Add ticket successfully"
+        : "Update ticket successfully",
       "bottomRight"
     );
   };
 
   const changeStatus = (record) => {
     record.status = record.status ? 0 : 1;
-    dispatch(updateUser(record));
+    dispatch(updateTicket(record));
   };
 
   const handleTableChange = () => {};
 
   const confirmDelete = () => {
-    dispatch(deleteUser(id));
-    openNotification("Delete user successfully", "bottomRight");
+    dispatch(deleteTicket(id));
+    openNotification("Delete ticket successfully", "bottomRight");
   };
 
   const openNotification = (text, placement) => {
@@ -119,13 +118,17 @@ const User = () => {
       <Form
         onFinish={handleSearch}
         initialValues={{
-          fullName: "",
+          ticketCode: "",
           status: "",
         }}
       >
         <Row gutter={{ md: 0, lg: 8, xl: 16 }}>
           <Col xl={8} md={12} xs={24}>
-            <FormItem name="fullName" label={"Full Name"} {...formItemLayout}>
+            <FormItem
+              name="ticketCode"
+              label={"Ticket Code"}
+              {...formItemLayout}
+            >
               <Input size="small" />
             </FormItem>
           </Col>
@@ -154,34 +157,24 @@ const User = () => {
 
   const columns = [
     {
-      title: "Full Name",
-      dataIndex: "fullName",
-      key: "fullName",
+      title: "Ticket Code",
+      dataIndex: "ticketCode",
+      key: "ticketCode",
       sorter: (a, b) => (a > b ? 1 : -1),
     },
     {
-      title: "Gender",
-      dataIndex: "gender",
-      key: "gender",
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
-      title: "Phone Number",
-      dataIndex: "phoneNumber",
-      key: "phoneNumber",
-    },
-    {
-      title: "Username",
-      key: "accountId",
+      title: "Flight",
+      key: "flightId",
       render: (text, record) => (
         <p>
-          {dataAccount &&
-            dataAccount.length > 0 &&
-            dataAccount.find((data) => data.id === record.accountId).username}
+          {dataFlight &&
+            dataFlight.length > 0 &&
+            dataFlight.find((data) => data.id === record.flightId).flightCode}
         </p>
       ),
     },
@@ -237,6 +230,7 @@ const User = () => {
       ),
     },
   ];
+
   return (
     <>
       <Content
@@ -249,7 +243,7 @@ const User = () => {
       >
         <Breadcrumb style={{ margin: "16px 0" }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>User Management</Breadcrumb.Item>
+          <Breadcrumb.Item>Ticket Management</Breadcrumb.Item>
         </Breadcrumb>
         {SearchForm()}
         <div
@@ -273,7 +267,7 @@ const User = () => {
           </Button>
         </div>
         <Drawer
-          title={typeAction === "add" ? "Add New User" : "Update User"}
+          title={typeAction === "add" ? "Add New Ticket" : "Update Ticket"}
           placement="right"
           closable={false}
           onClose={() => {
@@ -284,73 +278,45 @@ const User = () => {
         >
           <Form
             form={form}
-            onFinish={addUser}
+            onFinish={addTicket}
             initialValues={{
-              fullName: "",
-              gender: "",
-              email: "",
-              phoneNumber: "",
-              accountId: "",
+              ticketCode: "",
+              price: "",
+              userId: "",
+              flightId: "",
               status: 1,
             }}
             layout="vertical"
           >
             <FormItem
-              name="fullName"
-              label={"Full Name"}
-              rules={[
-                { required: true, message: "Please input your full name!" },
-              ]}
+              name="ticketCode"
+              label={"Ticket Code"}
+              rules={[{ required: true, message: "Please input ticket code!" }]}
             >
               <Input />
             </FormItem>
 
             <FormItem
-              name="gender"
-              label={"Gender"}
+              name="price"
+              label={"Price"}
               rules={[
-                { required: true, message: "Please select your gender!" },
+                { required: true, message: "Please input ticket price!" },
               ]}
             >
-              <Select>
-                <Option key={"Male"} value={"Male"}>
-                  Male
-                </Option>
-                <Option key={"Female"} value={"Female"}>
-                  Female
-                </Option>
-              </Select>
-            </FormItem>
-
-            <FormItem
-              name="email"
-              label={"Email"}
-              rules={[{ required: true, message: "Please input your email!" }]}
-            >
-              <Input />
-            </FormItem>
-
-            <FormItem
-              name="phoneNumber"
-              label={"Phone Number"}
-              rules={[
-                { required: true, message: "Please input your phone number!" },
-              ]}
-            >
-              <Input />
+              <Input type="number" />
             </FormItem>
 
             <Form.Item
-              label="Account"
-              name="accountId"
-              rules={[{ required: true, message: "Please select account!" }]}
+              label="Flight"
+              name="flightId"
+              rules={[{ required: true, message: "Please select flight!" }]}
             >
               <Select>
-                {dataAccount &&
-                  dataAccount.length > 0 &&
-                  dataAccount.map((data) => (
+                {dataFlight &&
+                  dataFlight.length > 0 &&
+                  dataFlight.map((data) => (
                     <Option key={data.id} value={data.id}>
-                      {data.username}
+                      {data.flightCode}
                     </Option>
                   ))}
               </Select>
@@ -364,7 +330,7 @@ const User = () => {
         <AppTable
           loading={loading}
           rowKey="id"
-          dataSource={users}
+          dataSource={tickets}
           columns={columns}
           onChange={handleTableChange}
         />
@@ -373,4 +339,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Ticket;

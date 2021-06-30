@@ -6,6 +6,7 @@ import Airport from "../pages/Airport/List";
 import FlightTime from "../pages/FlightTime/List";
 import User from "../pages/User/List";
 import Account from "../pages/Account/List";
+import Ticket from "../pages/Ticket/List";
 
 const AppRouter = () => {
   return (
@@ -16,6 +17,7 @@ const AppRouter = () => {
       <Route path="/time" component={FlightTime} />
       <Route path="/user" component={User} />
       <Route path="/account" component={Account} />
+      <Route path="/ticket" component={Ticket} />
     </>
   );
 };

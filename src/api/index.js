@@ -52,3 +52,12 @@ export const updateAccount = (id, data) =>
   axios.put(`${url}/account/${id}`, data);
 export const searchAccount = (dataSearch) =>
   axios.post(`${url}/account/search`, dataSearch);
+
+// TICKET MANAGEMENT
+export const fetchAllTicket = () => axios.get(`${url}/ticket`);
+export const createTicket = (data) => axios.post(`${url}/ticket`, data);
+export const deleteTicket = (id) => axios.delete(`${url}/ticket/${id}`);
+export const updateTicket = (id, data) =>
+  axios.put(`${url}/ticket/${id}`, data);
+export const searchTicket = (dataSearch) =>
+  axios.post(`${url}/ticket/search`, dataSearch);
