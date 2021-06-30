@@ -4,6 +4,7 @@ const ticketReducer = (state = [], action) => {
   switch (action.type) {
     case actions.FETCH_ALL_TICKET:
     case actions.SEARCH_TICKET:
+    case actions.TOTAL_TICKET:
       return action.payload;
     case actions.CREATE_TICKET:
       return [...state, action.payload];

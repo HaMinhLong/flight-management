@@ -1,5 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
+import Home from "../pages/Home/index";
 import Flight from "../pages/Flight/List";
 import Place from "../pages/Place/List";
 import Airport from "../pages/Airport/List";
@@ -12,6 +13,7 @@ import BookTicket from "../pages/BookTicket/List";
 const AppRouter = () => {
   return (
     <>
+      <Route exact path="/" component={Home} />
       <Route path="/flight" component={Flight} />
       <Route path="/place" component={Place} />
       <Route path="/airport" component={Airport} />

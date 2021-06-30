@@ -13,4 +13,17 @@ module.exports = function (app) {
   app.delete("/api/flight/:id", flight.delete);
   // search
   app.post("/api/flight/search", flight.search);
+  // total
+  app.post("/api/flight/total", flight.total);
+  // total by place departure
+  app.post("/api/flight/total/place-departure", flight.totalByPlaceDeparture);
+  // total by place destination
+  app.post(
+    "/api/flight/total/place-destination",
+    flight.totalByPlaceDestination
+  );
+  // total by type
+  app.post("/api/flight/total/type", flight.totalByType);
+  // total by airport
+  app.post("/api/flight/total/airport", flight.totalByAirport);
 };

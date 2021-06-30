@@ -9,6 +9,14 @@ export const updateFlight = (id, data) =>
   axios.put(`${url}/flight/${id}`, data);
 export const searchFlight = (dataSearch) =>
   axios.post(`${url}/flight/search`, dataSearch);
+export const totalFlight = () => axios.post(`${url}/flight/total`);
+export const totalFlightByPlaceDeparture = () =>
+  axios.post(`${url}/flight/total/place-departure`);
+export const totalFlightByPlaceDestination = () =>
+  axios.post(`${url}/flight/total/place-destination`);
+export const totalFlightByType = () => axios.post(`${url}/flight/total/type`);
+export const totalFlightByAirport = () =>
+  axios.post(`${url}/flight/total/airport`);
 
 // PLACE MANAGEMENT
 export const fetchAllPlace = () => axios.get(`${url}/place`);
@@ -17,6 +25,7 @@ export const deletePlace = (id) => axios.delete(`${url}/place/${id}`);
 export const updatePlace = (id, data) => axios.put(`${url}/place/${id}`, data);
 export const searchPlace = (dataSearch) =>
   axios.post(`${url}/place/search`, dataSearch);
+export const totalPlace = () => axios.post(`${url}/place/total`);
 
 // AIRPORT MANAGEMENT
 export const fetchAllAirport = () => axios.get(`${url}/airport`);
@@ -44,6 +53,7 @@ export const updateUser = (id, data) => axios.put(`${url}/user/${id}`, data);
 export const searchUser = (dataSearch) =>
   axios.post(`${url}/user/search`, dataSearch);
 export const loginUser = (data) => axios.post(`${url}/user/login`, data);
+export const totalUser = () => axios.post(`${url}/user/total`);
 
 // ACCOUNT MANAGEMENT
 export const fetchAllAccount = () => axios.get(`${url}/account`);
@@ -62,6 +72,7 @@ export const updateTicket = (id, data) =>
   axios.put(`${url}/ticket/${id}`, data);
 export const searchTicket = (dataSearch) =>
   axios.post(`${url}/ticket/search`, dataSearch);
+export const totalTicket = () => axios.post(`${url}/ticket/total`);
 
 // BOOK TICKET MANAGEMENT
 export const fetchAllBookTicket = () => axios.get(`${url}/bookTicket`);

@@ -53,3 +53,11 @@ export const loginUser = (dataLogin) => async (dispatch) => {
     payload: data,
   });
 };
+
+export const totalUser = () => async (dispatch) => {
+  const { data } = await api.totalUser();
+  dispatch({
+    type: actions.TOTAL_USER,
+    payload: data,
+  });
+};

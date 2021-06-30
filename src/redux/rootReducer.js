@@ -7,6 +7,7 @@ import userReducer from "./User/UserReducer";
 import accountReducer from "./Account/AccountReducer";
 import ticketReducer from "./Ticket/TicketReducer";
 import bookTicketReducer from "./BookTicket/BookTicketReducer";
+import statisticalReducer from "./Statistical/StatisticalReducer";
 
 const rootReducer = combineReducers({
   flight: flightReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   account: accountReducer,
   ticket: ticketReducer,
   bookTicket: bookTicketReducer,
+  statistical: statisticalReducer,
 });
 
 export default rootReducer;

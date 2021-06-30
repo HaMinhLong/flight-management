@@ -4,6 +4,7 @@ const flightReducer = (state = [], action) => {
   switch (action.type) {
     case actions.FETCH_ALL_FLIGHT:
     case actions.SEARCH_FLIGHT:
+    case actions.TOTAL_FLIGHT:
       return action.payload;
     case actions.CREATE_FLIGHT:
       return [...state, action.payload];

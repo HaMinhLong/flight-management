@@ -45,3 +45,11 @@ export const searchPlace = (dataSearch) => async (dispatch) => {
     payload: data,
   });
 };
+
+export const totalPlace = () => async (dispatch) => {
+  const { data } = await api.totalPlace();
+  dispatch({
+    type: actions.TOTAL_PLACE,
+    payload: data,
+  });
+};
