@@ -160,16 +160,20 @@ const Ticket = () => {
       title: "Ticket Code",
       dataIndex: "ticketCode",
       key: "ticketCode",
+      fixed: "left",
+      width: 150,
       sorter: (a, b) => (a > b ? 1 : -1),
     },
     {
       title: "Price",
       dataIndex: "price",
+      width: 100,
       key: "price",
     },
     {
       title: "Flight",
       key: "flightId",
+      width: 100,
       render: (text, record) => (
         <p>
           {dataFlight &&
@@ -183,6 +187,7 @@ const Ticket = () => {
       title: "Status",
       align: "center",
       key: "status",
+      width: 100,
       render: (text, record) => (
         <Space size="middle">
           <Tooltip placement="top" title={record.status ? "Active" : "Cancel"}>
@@ -199,6 +204,7 @@ const Ticket = () => {
       title: "Action",
       key: "action",
       align: "right",
+      width: 150,
       render: (text, record) => (
         <Space size="middle">
           <Button
@@ -334,6 +340,7 @@ const Ticket = () => {
           dataSource={tickets}
           columns={columns}
           onChange={handleTableChange}
+          scrollX={{ x: 600 }}
         />
       </Content>
     </>

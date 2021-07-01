@@ -99,7 +99,11 @@ const User = () => {
     dispatch(updateUser(record));
   };
 
-  const handleTableChange = () => {};
+  const handleTableChange = (pagination, filters, sorter) => {
+    console.log("pagination: ", pagination);
+    console.log("filters: ", filters);
+    console.log("sorter: ", sorter);
+  };
 
   const confirmDelete = () => {
     dispatch(deleteUser(id));
@@ -157,26 +161,36 @@ const User = () => {
       title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
+      fixed: "left",
+      width: 150,
       sorter: (a, b) => (a > b ? 1 : -1),
     },
     {
       title: "Gender",
       dataIndex: "gender",
       key: "gender",
+      width: 100,
+      filters: [
+        { text: "Male", value: "Male" },
+        { text: "Female", value: "Female" },
+      ],
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      width: 200,
     },
     {
       title: "Phone Number",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
+      width: 150,
     },
     {
       title: "Username",
       key: "accountId",
+      width: 150,
       render: (text, record) => (
         <p>
           {dataAccount &&
@@ -190,6 +204,7 @@ const User = () => {
       title: "Status",
       align: "center",
       key: "status",
+      width: 100,
       render: (text, record) => (
         <Space size="middle">
           <Tooltip placement="top" title={record.status ? "Active" : "Cancel"}>
@@ -206,6 +221,7 @@ const User = () => {
       title: "Action",
       key: "action",
       align: "right",
+      width: 150,
       render: (text, record) => (
         <Space size="middle">
           <Button
@@ -368,6 +384,7 @@ const User = () => {
           dataSource={users}
           columns={columns}
           onChange={handleTableChange}
+          scrollX={{ x: 700 }}
         />
       </Content>
     </>

@@ -152,16 +152,20 @@ const FlightTime = () => {
       title: "Flight Time Name",
       dataIndex: "fromTo",
       key: "fromTo",
+      fixed: "left",
+      width: 200,
     },
     {
       title: "Created At",
       key: "createdAt",
+      width: 150,
       render: (text, record) => <p>{moment(record.createdAt).format("LL")}</p>,
     },
     {
       title: "Status",
       align: "center",
       key: "status",
+      width: 100,
       render: (text, record) => (
         <Space size="middle">
           <Tooltip placement="top" title={record.status ? "Active" : "Cancel"}>
@@ -178,6 +182,7 @@ const FlightTime = () => {
       title: "Action",
       key: "action",
       align: "right",
+      width: 150,
       render: (text, record) => (
         <Space size="middle">
           <Button
@@ -286,6 +291,7 @@ const FlightTime = () => {
           dataSource={flightTimes}
           columns={columns}
           onChange={handleTableChange}
+          scrollX={{ x: 600 }}
         />
       </Content>
     </>

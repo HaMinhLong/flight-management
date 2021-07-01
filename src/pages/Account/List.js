@@ -153,17 +153,21 @@ const Account = () => {
       title: "Username",
       dataIndex: "username",
       key: "username",
+      fixed: "left",
+      width: 150,
       sorter: (a, b) => (a > b ? 1 : -1),
     },
     {
       title: "Created At",
       key: "createdAt",
+      width: 150,
       render: (text, record) => <p>{moment(record.createdAt).format("LL")}</p>,
     },
     {
       title: "Status",
       align: "center",
       key: "status",
+      width: 100,
       render: (text, record) => (
         <Space size="middle">
           <Tooltip placement="top" title={record.status ? "Active" : "Cancel"}>
@@ -180,6 +184,7 @@ const Account = () => {
       title: "Action",
       key: "action",
       align: "right",
+      width: 150,
       render: (text, record) => (
         <Space size="middle">
           <Button
@@ -327,6 +332,7 @@ const Account = () => {
         dataSource={accounts}
         columns={columns}
         onChange={handleTableChange}
+        scrollX={{ x: 600 }}
       />
     </Content>
   );

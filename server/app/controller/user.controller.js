@@ -98,9 +98,10 @@ exports.login = async (req, res) => {
     }
   );
   const checkPassword = await Sequelize.query(
-    `SELECT * FROM accounts AS A JOIN users AS U ON A.id = U.accountId WHERE A.password = :password`,
+    `SELECT * FROM accounts AS A JOIN users AS U ON A.id = U.accountId WHERE A.username = :username AND A.password = :password`,
     {
       replacements: {
+        username: username,
         password: password,
       },
       type: QueryTypes.SELECT,

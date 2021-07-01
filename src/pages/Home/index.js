@@ -45,7 +45,14 @@ const Home = () => {
   );
 
   // const configDualAxes = {
-  //   data: [totalFlightsDeparture, totalFlightsDestination],
+  //   data: [
+  //     totalFlightsDeparture && totalFlightsDeparture.length > 0
+  //       ? totalFlightsDeparture
+  //       : [],
+  //     totalFlightsDestination && totalFlightsDestination.length > 0
+  //       ? totalFlightsDestination
+  //       : [],
+  //   ],
   //   xField: "type",
   //   yField: ["value"],
   //   geometryOptions: [
@@ -67,7 +74,10 @@ const Home = () => {
   // };
 
   const configLineDeparture = {
-    data: totalFlightsDeparture || {},
+    data:
+      totalFlightsDeparture && totalFlightsDeparture.length > 0
+        ? totalFlightsDeparture
+        : [],
     xField: "type",
     yField: "value",
     seriesField: "category",
@@ -85,7 +95,10 @@ const Home = () => {
 
   const configPieDestination = {
     appendPadding: 10,
-    data: totalFlightsDestination || {},
+    data:
+      totalFlightsDestination && totalFlightsDestination.length > 0
+        ? totalFlightsDestination
+        : [],
     angleField: "value",
     colorField: "type",
     radius: 0.8,
@@ -94,7 +107,10 @@ const Home = () => {
   };
 
   const configBarAirport = {
-    data: totalFlightsByAirport || {},
+    data:
+      totalFlightsByAirport && totalFlightsByAirport.length > 0
+        ? totalFlightsByAirport
+        : [],
     xField: "value",
     yField: "type",
     seriesField: "type",
@@ -102,7 +118,10 @@ const Home = () => {
   };
 
   const configAreaType = {
-    data: totalFlightsByType || {},
+    data:
+      totalFlightsByType && totalFlightsByType.length > 0
+        ? totalFlightsByType
+        : [],
     xField: "type",
     yField: "value",
     xAxis: {
@@ -125,8 +144,8 @@ const Home = () => {
         }}
       >
         <Title level={2}>Dashboard</Title>
-        <Row gutter={[32, 32]}>
-          <Col span={6}>
+        <Row gutter={[16, 16]}>
+          <Col xs={24} lg={12} xl={6}>
             <Card
               title="Flight Management"
               extra={<Link to="/flight">Details</Link>}
@@ -147,7 +166,7 @@ const Home = () => {
               </Text>
             </Card>
           </Col>
-          <Col span={6}>
+          <Col xs={24} lg={12} xl={6}>
             <Card
               title="Place Management"
               extra={<Link to="/place">Details</Link>}
@@ -171,7 +190,7 @@ const Home = () => {
               </Text>
             </Card>
           </Col>
-          <Col span={6}>
+          <Col xs={24} lg={12} xl={6}>
             <Card
               title="Ticket Management"
               extra={<Link to="/ticket">Details</Link>}
@@ -195,7 +214,7 @@ const Home = () => {
               </Text>
             </Card>
           </Col>
-          <Col span={6}>
+          <Col xs={24} lg={12} xl={6}>
             <Card
               title="User Management"
               extra={<Link to="/user">Details</Link>}
@@ -223,26 +242,24 @@ const Home = () => {
 
         {/* <Row gutter={[32, 32]} style={{ marginTop: 32 }}>
           <Col span={24}>
-            {totalFlightsDeparture && totalFlightsDestination && (
-              <DualAxes {...configDualAxes} />
-            )}
+            <DualAxes {...configDualAxes} />
           </Col>
         </Row> */}
 
         <Row gutter={[32, 32]} style={{ marginTop: 32 }}>
-          <Col span={12}>
-            {totalFlightsDeparture && <Line {...configLineDeparture} />}
+          <Col xs={24} xl={12}>
+            <Line {...configLineDeparture} />
           </Col>
-          <Col span={12}>
-            {totalFlightsDestination && <Pie {...configPieDestination} />}
+          <Col xs={24} xl={12}>
+            <Pie {...configPieDestination} />
           </Col>
         </Row>
         <Row gutter={[32, 32]} style={{ marginTop: 32 }}>
-          <Col span={18}>
-            {totalFlightsByAirport && <Bar {...configBarAirport} />}
+          <Col xs={24} xl={18}>
+            <Bar {...configBarAirport} />
           </Col>
-          <Col span={6}>
-            {totalFlightsByType && <Area {...configAreaType} />}
+          <Col xs={24} xl={6}>
+            <Area {...configAreaType} />
           </Col>
         </Row>
       </Content>
