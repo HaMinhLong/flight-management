@@ -4,16 +4,30 @@ import { Layout, Menu } from "antd";
 const { Sider } = Layout;
 
 const MenuItem = ({ collapsed }) => {
+  const home = window.location.href === "http://localhost:3000/" ? true : false;
   return (
     <>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <Link to="/" className="logo">
-          <img
-            src="https://findlogovector.com/wp-content/uploads/2018/07/professional-flight-management-pfm-logo-vector.png"
-            alt="logo-page"
-          />
-        </Link>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        collapsedWidth={50}
+        collapsible={true}
+      >
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]}>
+          <Menu.Item key="0" icon={<i className="fas fa-chart-line"></i>}>
+            <Link
+              to="/"
+              className="logo"
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              {/* <img
+                src="https://findlogovector.com/wp-content/uploads/2018/07/professional-flight-management-pfm-logo-vector.png"
+                alt="logo-page"
+              /> */}
+              Dashboard
+            </Link>
+          </Menu.Item>
           <Menu.Item key="1" icon={<i className="fas fa-plane"></i>}>
             <Link to="/flight">Flight Management</Link>
           </Menu.Item>

@@ -202,30 +202,36 @@ const Flight = () => {
       title: "Flight Code",
       dataIndex: "flightCode",
       key: "flightCode",
+      fixed: "left",
+      width: 100,
       sorter: (a, b) => (a > b ? 1 : -1),
     },
     {
       title: "Flight Type",
       dataIndex: "type",
       align: "center",
+      width: 150,
       key: "type",
     },
     {
       title: "Place Departure",
       dataIndex: "placeDeparture",
       align: "center",
+      width: 200,
       key: "placeDeparture",
     },
     {
       title: "Place Destination",
       dataIndex: "placeDestination",
       align: "center",
+      width: 200,
       key: "placeDestination",
     },
     {
       title: "Airport Destination",
       align: "center",
       key: "airportId",
+      width: 200,
       render: (text, record) =>
         dataAirport &&
         dataAirport.length > 0 &&
@@ -236,6 +242,7 @@ const Flight = () => {
       title: "Flight Time",
       align: "center",
       key: "flightTimeId",
+      width: 150,
       render: (text, record) =>
         dataFlightTime &&
         dataFlightTime.length > 0 &&
@@ -248,6 +255,7 @@ const Flight = () => {
       title: "Status",
       align: "center",
       key: "status",
+      width: 100,
       render: (text, record) => (
         <Space size="middle">
           <Tooltip placement="top" title={record.status ? "Active" : "Cancel"}>
@@ -264,6 +272,7 @@ const Flight = () => {
       title: "Action",
       key: "action",
       align: "right",
+      width: 150,
       render: (text, record) => (
         <Space size="middle">
           <Button
@@ -453,6 +462,7 @@ const Flight = () => {
           dataSource={flights}
           columns={columns}
           onChange={handleTableChange}
+          scrollX={{ x: 1500 }}
         />
       </Content>
     </>

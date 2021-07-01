@@ -178,6 +178,8 @@ const BookTicket = () => {
     {
       title: "Ticket Code",
       key: "ticketId",
+      fixed: "left",
+      width: 150,
       render: (text, record) => (
         <p>
           {dataTicket &&
@@ -191,6 +193,7 @@ const BookTicket = () => {
     {
       title: "User",
       key: "userId",
+      width: 150,
       render: (text, record) => (
         <p>
           {dataUser &&
@@ -205,6 +208,7 @@ const BookTicket = () => {
       title: "Status",
       align: "center",
       key: "status",
+      width: 100,
       render: (text, record) => (
         <Space size="middle">
           <Tooltip placement="top" title={record.status ? "Active" : "Cancel"}>
@@ -221,6 +225,7 @@ const BookTicket = () => {
       title: "Action",
       key: "action",
       align: "right",
+      width: 150,
       render: (text, record) => (
         <Space size="middle">
           <Button
@@ -350,10 +355,13 @@ const BookTicket = () => {
                 <Text type="secondary">{flightDetails.placeDestination}</Text>
               </p>
               <p>
-                Flight Code:{" "}
+                Airport:{" "}
                 <Text type="secondary">
                   {dataAirport &&
                     dataAirport.length > 0 &&
+                    dataAirport.find(
+                      (data) => data.id === flightDetails.airportId
+                    ) &&
                     dataAirport.find(
                       (data) => data.id === flightDetails.airportId
                     ).name}
@@ -368,6 +376,7 @@ const BookTicket = () => {
           dataSource={bookTickets}
           columns={columns}
           onChange={handleTableChange}
+          scrollX={{ x: 600 }}
         />
       </Content>
     </>

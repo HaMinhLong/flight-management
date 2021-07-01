@@ -16,6 +16,7 @@ const AppTable = ({
   size,
   emptyText,
   defaultExpandAllRows,
+  scrollX,
   ...rest
 }) => {
   if (!dataSource) {
@@ -37,6 +38,7 @@ const AppTable = ({
         locale={{ emptyText: emptyText || "Không có dữ liệu" }}
         condensed={condensed}
         bordered={bordered}
+        scroll={scrollX}
         {...rest}
       />
     );
@@ -57,6 +59,7 @@ const AppTable = ({
         condensed={condensed}
         bordered={bordered}
         pagination={false}
+        scroll={scrollX}
         {...rest}
       />
     );
@@ -76,6 +79,7 @@ const AppTable = ({
       locale={{ emptyText: emptyText || "Không có dữ liệu" }}
       condensed={condensed}
       bordered={bordered}
+      scroll={scrollX}
       {...rest}
     />
   );

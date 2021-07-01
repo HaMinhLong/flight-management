@@ -155,12 +155,15 @@ const Airport = () => {
       title: "Airport Name",
       dataIndex: "name",
       key: "name",
+      fixed: "left",
+      width: 200,
       sorter: (a, b) => (a > b ? 1 : -1),
     },
     {
       title: "Place Name",
       key: "placeId",
       sorter: (a, b) => (a > b ? 1 : -1),
+      width: 200,
       render: (text, record) => (
         <p>
           {dataPlace &&
@@ -173,12 +176,14 @@ const Airport = () => {
     {
       title: "Created At",
       key: "createdAt",
+      width: 150,
       render: (text, record) => <p>{moment(record.createdAt).format("LL")}</p>,
     },
     {
       title: "Status",
       align: "center",
       key: "status",
+      width: 100,
       render: (text, record) => (
         <Space size="middle">
           <Tooltip placement="top" title={record.status ? "Active" : "Cancel"}>
@@ -195,6 +200,7 @@ const Airport = () => {
       title: "Action",
       key: "action",
       align: "right",
+      width: 150,
       render: (text, record) => (
         <Space size="middle">
           <Button
@@ -319,6 +325,7 @@ const Airport = () => {
           dataSource={airports}
           columns={columns}
           onChange={handleTableChange}
+          scrollX={{ x: 800 }}
         />
       </Content>
     </>
