@@ -53,6 +53,7 @@ export const updateUser = (id, data) => axios.put(`${url}/user/${id}`, data);
 export const searchUser = (dataSearch) =>
   axios.post(`${url}/user/search`, dataSearch);
 export const loginUser = (data) => axios.post(`${url}/user/login`, data);
+export const registerUser = (data) => axios.post(`${url}/user/register`, data);
 export const totalUser = () => axios.post(`${url}/user/total`);
 
 // ACCOUNT MANAGEMENT

@@ -15,6 +15,8 @@ module.exports = function (app) {
   app.post("/api/user/search", user.search);
   //login
   app.post("/api/user/login", user.login);
+  //register
+  app.post("/api/user/register", user.register);
   // total
   app.post("/api/user/total", user.total);
 };

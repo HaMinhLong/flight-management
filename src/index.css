@@ -39,14 +39,44 @@ code {
   justify-content: space-between;
   padding: 0px 20px 0px 0px !important;
 }
-.login-page {
+.login-page,
+.sign-up-page {
   width: 100%;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: url("/src/static/images/bg-sign-in.jpg");
+  background-size: cover;
+  background-position: center;
 }
+.login-page .form-container {
+  height: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 30px;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  box-shadow: 0 3px 10px 0 rgb(0 0 0 / 14%);
+}
+
 .ant-table-small .ant-table-thead > tr > th {
   background: #1890ff !important;
   color: #fff;
+}
+.form-login {
+  width: 500px;
+}
+
+@media (max-width: 375px) {
+  .form-login {
+    width: 300px;
+  }
 }
