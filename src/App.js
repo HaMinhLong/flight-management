@@ -4,6 +4,7 @@ import AppRouter from "./router/router.config";
 import MenuItem from "./layout/MenuItem";
 import AppHeader from "./layout/AppHeader";
 import Login from "./pages/Login/Login";
+import SignUp from "./pages/SignUp/SignUp";
 import { Layout } from "antd";
 
 const App = () => {
@@ -16,7 +17,10 @@ const App = () => {
     <>
       <Router>
         {!isLogin ? (
-          <Route path="/" component={Login} />
+          <>
+            <Route exact path="/" component={Login} />
+            <Route path="/register" component={SignUp} />
+          </>
         ) : (
           <Layout id="components-layout-demo-custom-trigger">
             <MenuItem collapsed={collapsed} />

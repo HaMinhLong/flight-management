@@ -342,7 +342,13 @@ const User = () => {
             <FormItem
               name="email"
               label={"Email"}
-              rules={[{ required: true, message: "Please input your email!" }]}
+              rules={[
+                {
+                  type: "email",
+                  message: "The input is not valid E-mail!",
+                },
+                { required: true, message: "Please input your email!" },
+              ]}
             >
               <Input />
             </FormItem>

@@ -5,6 +5,7 @@ const userReducer = (state = [], action) => {
     case actions.FETCH_ALL_USER:
     case actions.SEARCH_USER:
     case actions.LOGIN_USER:
+    case actions.REGISTER_USER:
     case actions.TOTAL_USER:
       return action.payload;
     case actions.CREATE_USER:

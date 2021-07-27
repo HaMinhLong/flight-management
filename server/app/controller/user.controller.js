@@ -1,6 +1,7 @@
 const fs = require("fs");
 const db = require("../config/db.config.js");
 const Users = db.users;
+const Accounts = db.accounts;
 const Sequelize = db.sequelize;
 const { QueryTypes } = require("sequelize");
 
@@ -89,7 +90,7 @@ exports.search = async (req, res) => {
 exports.login = async (req, res) => {
   const { username, password } = req.body;
   const checkUsername = await Sequelize.query(
-    `SELECT * FROM accounts AS A JOIN users AS U ON A.id = U.accountId WHERE A.username = :username`,
+    `SELECT * FROM accounts AS A JOIN users AS U ON A.id = U.accountId WHERE A.username = :username AND A.status = '1'`,
     {
       replacements: {
         username: username,
@@ -114,6 +115,81 @@ exports.login = async (req, res) => {
     : checkPassword;
 
   res.status(200).json(users);
+};
+
+exports.register = async (req, res) => {
+  const {
+    idUser,
+    fullName,
+    gender,
+    email,
+    phoneNumber,
+    idAccount,
+    username,
+    password,
+  } = req.body;
+
+  const checkEmail = await Sequelize.query(
+    `SELECT  email FROM users WHERE email = :email`,
+    {
+      replacements: {
+        email: email,
+      },
+      type: QueryTypes.SELECT,
+    }
+  );
+  const checkPhone = await Sequelize.query(
+    `SELECT phoneNumber FROM users WHERE  phoneNumber = :phoneNumber`,
+    {
+      replacements: {
+        phoneNumber: phoneNumber,
+      },
+      type: QueryTypes.SELECT,
+    }
+  );
+
+  const checkUsername = await Sequelize.query(
+    `SELECT username FROM accounts WHERE username = :username`,
+    {
+      replacements: {
+        username: username,
+      },
+      type: QueryTypes.SELECT,
+    }
+  );
+
+  !checkEmail.length > 0 && !checkPhone.length > 0 && !checkUsername.length > 0
+    ? await Accounts.create({
+        id: idAccount,
+        username: username,
+        password: password,
+        status: 1,
+      })
+    : console.log("error");
+  !checkEmail.length > 0 && !checkPhone.length > 0 && !checkUsername.length > 0
+    ? await Users.create({
+        id: idUser,
+        fullName: fullName,
+        gender: gender,
+        email: email,
+        phoneNumber: phoneNumber,
+        accountId: idAccount,
+        status: 1,
+      })
+    : console.log("error");
+
+  console.log(checkEmail);
+  console.log(checkPhone);
+
+  const message =
+    checkEmail && checkEmail.length > 0
+      ? "Email already in use"
+      : checkPhone && checkPhone.length > 0
+      ? "Phone number already in use"
+      : checkUsername && checkUsername.length > 0
+      ? "Username already in use"
+      : "Register Successfully";
+  res.status(200).json(message);
 };
 
 exports.total = async (req, res) => {
